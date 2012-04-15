@@ -70,6 +70,19 @@ public final class PreferenceConstants {
     public static final int CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD_DEFAULT = 2;
     
     /**
+     * Whether the used keyboard shortcut should be shown is enabled preference.
+     * The preference indicates whether to show the used keyboard shortcut for
+     * e.g. screencasts or coding dojos performed on a projector.
+     */
+    public static final String P_SHOW_USED_KEYBOARD_SHORTCUT = "ShowUsedKeyboardShortcut";
+
+    /**
+     * The default value for the setting {@link #P_SHOW_USED_KEYBOARD_SHORTCUT}
+     * setting.
+     */
+    public static final boolean SHOW_USED_KEYBOARD_SHORTCUT_DEFAULT = false;
+
+    /**
      * Indicates how to deal with actions called with wrong action invocation
      * mode if there is no specific handling defined.
      */

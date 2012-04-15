@@ -1,5 +1,6 @@
 package com.mousefeed.eclipse;
 
+import com.mousefeed.eclipse.preferences.PreferenceAccessor;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.keys.IBindingService;
 
 public class KeyStrokeListener implements Listener {
-    private IBindingService bindingService;
+    /**
+     * Provides access to the plugin preferences.
+     */
+    private final PreferenceAccessor preferences =
+            PreferenceAccessor.getInstance();
+
+    private final IBindingService bindingService;
 
     public KeyStrokeListener() {
         bindingService = (IBindingService) PlatformUI.getWorkbench()
@@ -25,6 +32,9 @@ public class KeyStrokeListener implements Listener {
     }
 
     public void handleEvent(Event event) {
+        if (!preferences.isShowUsedKeyboardShortcutEnabled()) {
+            return;
+        }
         Collection<KeySequence> keySequences = generateKeySequences(event);
         Binding binding = determineFirstPerfectMatchForKeySequences(keySequences);
         if (binding != null) {

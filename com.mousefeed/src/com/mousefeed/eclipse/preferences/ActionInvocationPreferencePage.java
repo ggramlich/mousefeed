@@ -25,6 +25,7 @@ import static com.mousefeed.eclipse.Layout.placeUnder;
 import static com.mousefeed.eclipse.preferences.PreferenceConstants.CONFIGURE_KEYBOARD_SHORTCUT_ENABLED_DEFAULT;
 import static com.mousefeed.eclipse.preferences.PreferenceConstants.CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD_DEFAULT;
 import static com.mousefeed.eclipse.preferences.PreferenceConstants.INVOCATION_CONTROL_ENABLED_DEFAULT;
+import static com.mousefeed.eclipse.preferences.PreferenceConstants.SHOW_USED_KEYBOARD_SHORTCUT_DEFAULT;
 import static org.apache.commons.lang.Validate.notNull;
 
 import com.mousefeed.client.Messages;
@@ -98,6 +99,13 @@ public class ActionInvocationPreferencePage extends PreferencePage
     private Spinner configureKeyboardShortcutThreshold;
 
     /**
+     * Setting whether the used keyboard shortcut should be shown is enabled
+     * preference. The preference indicates whether to show the used keyboard
+     * shortcut for e.g. screencasts or coding dojos performed on a projector.
+     */
+    private Button showUsedKeyboardShortcutCheckbox;
+
+    /**
      * Setting what to do when user invokes an action using wrong invocation
      * mode.
      */
@@ -146,6 +154,10 @@ public class ActionInvocationPreferencePage extends PreferencePage
                 createConfigureKeyboardShortcutThreshold(composite, c);
         c = configureKeyboardShortcutThreshold;
 
+        showUsedKeyboardShortcutCheckbox = createShowUsedKeyboardShortcutCheckbox(
+                composite, c);
+        c = showUsedKeyboardShortcutCheckbox;
+
         c = onWrongInvocationModeUI.createLabel(composite, c,
                 MESSAGES.get("field.defaultOnWrongInvocationMode.label"));
         onWrongInvocationModeCombo =
@@ -159,6 +171,8 @@ public class ActionInvocationPreferencePage extends PreferencePage
                 preferences.isConfigureKeyboardShortcutEnabled());
         updateConfigureKeyboardShortcutThreshold(
                 preferences.getConfigureKeyboardShortcutThreshold());
+        updateShowUsedKeyboardShortcutEnabled(
+                preferences.isShowUsedKeyboardShortcutEnabled());
         
         actionModeControl = createActionModeControl(composite);
         c = actionModeControl;
@@ -181,6 +195,8 @@ public class ActionInvocationPreferencePage extends PreferencePage
                 CONFIGURE_KEYBOARD_SHORTCUT_ENABLED_DEFAULT);
         updateConfigureKeyboardShortcutThreshold(
                 CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD_DEFAULT);
+        updateShowUsedKeyboardShortcutEnabled(
+                SHOW_USED_KEYBOARD_SHORTCUT_DEFAULT);
         actionModeControl.clearActionSettings();
     }
 
@@ -191,6 +207,7 @@ public class ActionInvocationPreferencePage extends PreferencePage
         preferences.storeInvocationControlEnabled(isInvocationControlEnabled());
         preferences.storeConfigureKeyboardShortcutEnabled(isConfigureKeyboardShortcutEnabled());
         preferences.storeConfigureKeyboardShortcutThreshold(getConfigureKeyboardShortcutThreshold());
+        preferences.storeShowUsedKeyboardShortcutEnabled(isShowUsedKeyboardShortcutEnabled());
         preferences.setActionsOnWrongInvocationMode(
                 actionModeControl.getActionModes());
         return super.performOk();
@@ -267,7 +284,8 @@ public class ActionInvocationPreferencePage extends PreferencePage
      */
     private void onConfigureKeyboardShortcutCheckboxSelected() {
         final Control c = configureKeyboardShortcutThreshold;
-        c.setEnabled(isInvocationControlEnabled());
+        c.setEnabled(isInvocationControlEnabled()
+                && isConfigureKeyboardShortcutEnabled());
     }
 
     /**
@@ -288,6 +306,22 @@ public class ActionInvocationPreferencePage extends PreferencePage
         placeUnder(spinner, label, STACKED_V_OFFSET);
 
         return spinner;
+    }
+
+    /**
+     * Creates the control for {@link #showUsedKeyboardShortcutCheckbox}.
+     */
+    private Button createShowUsedKeyboardShortcutCheckbox(
+            final Composite container, final Control above) {
+        notNull(container);
+
+        final Button checkbox = new Button(container, SWT.CHECK | SWT.LEAD);
+        checkbox.setText(MESSAGES
+                .get("field.showUsedKeyboardShortcutCheckbox.label"));
+        checkbox.setToolTipText(MESSAGES
+                .get("field.showUsedKeyboardShortcutCheckbox.tooltip"));
+        placeUnder(checkbox, above, STACKED_V_OFFSET);
+        return checkbox;
     }
 
     /**
@@ -405,4 +439,22 @@ public class ActionInvocationPreferencePage extends PreferencePage
     private void updateConfigureKeyboardShortcutThreshold(final int threshold) {
         configureKeyboardShortcutThreshold.setSelection(threshold);
     }
+
+    /**
+     * The currently selected value of the preference whether show used keyboard
+     * shortcut is enabled.
+     * @return the show used keyboard shortcut preference.
+     */
+    private boolean isShowUsedKeyboardShortcutEnabled() {
+        return showUsedKeyboardShortcutCheckbox.getSelection();
+    }
+
+    /**
+     * Make UI indicate whether to show used keyboard shortcuts.
+     * @param enabled the value shown by UI.
+     */
+    private void updateShowUsedKeyboardShortcutEnabled(final boolean enabled) {
+        showUsedKeyboardShortcutCheckbox.setSelection(enabled);
+    }
+
 }

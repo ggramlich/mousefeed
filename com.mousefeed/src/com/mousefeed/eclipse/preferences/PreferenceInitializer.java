@@ -18,11 +18,10 @@
  */
 package com.mousefeed.eclipse.preferences;
 
-import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import com.mousefeed.client.OnWrongInvocationMode;
 import com.mousefeed.eclipse.Activator;
+import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
+import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * Initializes default preference values.
@@ -55,5 +54,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         store.setDefault(
                 PreferenceConstants.P_CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD,
                 PreferenceConstants.CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD_DEFAULT);
+        store.setDefault(PreferenceConstants.P_SHOW_USED_KEYBOARD_SHORTCUT,
+                PreferenceConstants.SHOW_USED_KEYBOARD_SHORTCUT_DEFAULT);
     }
 }

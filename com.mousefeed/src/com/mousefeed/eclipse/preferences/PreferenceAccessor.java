@@ -18,10 +18,11 @@
  */
 package com.mousefeed.eclipse.preferences;
 
-import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_DEFAULT_ON_WRONG_INVOCATION_MODE;
-import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_INVOCATION_CONTROL_ENABLED;
 import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_CONFIGURE_KEYBOARD_SHORTCUT_ENABLED;
 import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD;
+import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_DEFAULT_ON_WRONG_INVOCATION_MODE;
+import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_INVOCATION_CONTROL_ENABLED;
+import static com.mousefeed.eclipse.preferences.PreferenceConstants.P_SHOW_USED_KEYBOARD_SHORTCUT;
 import static org.apache.commons.lang.Validate.notNull;
 
 import com.mousefeed.client.OnWrongInvocationMode;
@@ -180,6 +181,27 @@ public class PreferenceAccessor {
                 P_CONFIGURE_KEYBOARD_SHORTCUT_THRESHOLD, configureKeyboardShortcutThreshold);
     }
     
+    /**
+     * Whether the used keyboard shortcut should be shown is enabled preference.
+     * The preference indicates whether to show the used keyboard shortcut for
+     * e.g. screencasts or coding dojos performed on a projector.
+     * @return current preference value whether keyboard shortcut should be shown.
+     */
+    public boolean isShowUsedKeyboardShortcutEnabled() {
+        return getPreferenceStore().getBoolean(P_SHOW_USED_KEYBOARD_SHORTCUT);
+    }
+
+    /**
+     * @param showUsedKeyboardShortcutEnabled the new value for the setting returned by
+     * {@link #isShowUsedKeyboardShortcutEnabled()}.
+     * @see #isShowUsedKeyboardShortcutEnabled()
+     */
+    public void storeShowUsedKeyboardShortcutEnabled(
+            final boolean showUsedKeyboardShortcutEnabled) {
+        getPreferenceStore().setValue(
+                P_SHOW_USED_KEYBOARD_SHORTCUT, showUsedKeyboardShortcutEnabled);
+    }
+
     /**
      * The default preference what to do by default on wrong invocation mode.
      * @return the global invocation mode preference. Never <code>null</code>.
