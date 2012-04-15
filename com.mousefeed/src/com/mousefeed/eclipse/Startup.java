@@ -25,6 +25,7 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * Hooks up the plugin listeners.
+ * 
  * @author Andriy Palamarchuk
  */
 public class Startup implements IStartup {
@@ -34,22 +35,23 @@ public class Startup implements IStartup {
      */
     public Startup() {
     }
-    
+
     /**
      * Hooks up event listeners.
      */
     public void earlyStartup() {
         getDisplay().asyncExec(new Runnable() {
             public void run() {
-                getDisplay().addFilter(
-                      SWT.Selection, new GlobalSelectionListener());
+                getDisplay().addFilter(SWT.Selection,
+                        new GlobalSelectionListener());
+                getDisplay().addFilter(SWT.KeyUp, new KeyStrokeListener());
             }
         });
     }
 
     /**
-     * Current workbench display.
-     * Not <code>null</code>.
+     * Current workbench display. Not <code>null</code>.
+     * 
      * @return the workbench display.
      */
     public Display getDisplay() {
