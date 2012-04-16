@@ -47,7 +47,7 @@ public class AbstractNagPopUp extends PopupDialog {
      */
     private static final LastActionInvocationRemiderFactory REMINDER_FACTORY = new LastActionInvocationRemiderFactory();
     /**
-     * @see NagPopUp#NagPopUp(String, String, boolean)
+     * @see NagPopUp(String, String, boolean)
      */
     protected String actionName;
     /**

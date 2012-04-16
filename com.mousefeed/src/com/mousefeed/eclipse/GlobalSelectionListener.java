@@ -21,23 +21,19 @@ package com.mousefeed.eclipse;
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 
-import com.mousefeed.eclipse.popup.NagPopUp;
-
-import java.util.HashSet;
-import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ParameterizedCommand;
-import org.eclipse.core.commands.common.NotDefinedException;
-
-
-import java.util.HashMap;
-
-import java.util.Map;
-
 import com.mousefeed.client.OnWrongInvocationMode;
 import com.mousefeed.client.collector.AbstractActionDesc;
 import com.mousefeed.client.collector.Collector;
+import com.mousefeed.eclipse.popup.ConfigureShortcutPopUp;
+import com.mousefeed.eclipse.popup.NagPopUp;
 import com.mousefeed.eclipse.preferences.PreferenceAccessor;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.SubContributionItem;
@@ -198,7 +194,7 @@ public class GlobalSelectionListener implements Listener {
             currentCount = currentCount + 1;
             actionUsageMonitor.put(id, currentCount);
             if (isConfigureKeyboardShortcutEnabled(currentCount.intValue()) && isConfigurableAction(actionDesc)) {
-                new NagPopUp(actionDesc.getLabel(), actionDesc.getId()).open();
+                new ConfigureShortcutPopUp(actionDesc.getLabel(), actionDesc.getId()).open();
             }
             return;
         }
