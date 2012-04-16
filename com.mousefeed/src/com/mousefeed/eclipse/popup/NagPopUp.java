@@ -24,16 +24,14 @@ import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 import static org.apache.commons.lang.time.DateUtils.MILLIS_PER_SECOND;
 
-import com.mousefeed.eclipse.Activator;
-
 import com.mousefeed.client.Messages;
+import com.mousefeed.eclipse.Activator;
 import java.util.HashSet;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.jface.dialogs.PopupDialog;
-import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -53,7 +51,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 
 //COUPLING:OFF - just uses a lot of other classes. It's Ok.
 /**
@@ -63,45 +60,6 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
  * @author Robert Wloch
  */
 public class NagPopUp extends PopupDialog {
-    /**
-     * Launcher runnable to open preference dialog.
-     * 
-     * @author Robert Wloch
-     */
-    protected static class PreferenceDialogLauncher implements Runnable {
-        /**
-         * Data object used as data parameter to the keys preference page.
-         */
-        private final Object data;
-
-        /**
-         * Constructs a launcher to open the keys preference page with the optional data object as parameter.
-         * @param data optional data object used as data parameter to the keys preference page
-         */
-        protected PreferenceDialogLauncher(final Object data) {
-            this.data = data;
-        }
-
-        /**
-         * Creates and opens the Keys preference page.
-         */
-        public void run() {
-            final Display workbenchDisplay = PlatformUI.getWorkbench().getDisplay();
-            final Shell activeShell = workbenchDisplay.getActiveShell();
-            
-            final String id = ORG_ECLIPSE_UI_PREFERENCE_PAGES_KEYS_ID;
-            final String[] displayedIds = new String[] {id};
-            final PreferenceDialog preferenceDialog = 
-                    PreferencesUtil.createPreferenceDialogOn(activeShell, id, displayedIds, data);
-            preferenceDialog.open();
-        }
-    }
-
-    /**
-     * ID of keys preference page.
-     */
-    private static final String ORG_ECLIPSE_UI_PREFERENCE_PAGES_KEYS_ID = "org.eclipse.ui.preferencePages.Keys";
-
     /**
      * How close to cursor along X axis the popup will be shown.
      */
