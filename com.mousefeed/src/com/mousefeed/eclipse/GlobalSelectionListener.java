@@ -21,6 +21,8 @@ package com.mousefeed.eclipse;
 import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 
+import com.mousefeed.eclipse.popup.NagPopUp;
+
 import java.util.HashSet;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;

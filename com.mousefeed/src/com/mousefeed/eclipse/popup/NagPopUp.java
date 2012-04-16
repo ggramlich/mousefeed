@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with MouseFeed.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mousefeed.eclipse;
+package com.mousefeed.eclipse.popup;
 
 import static com.mousefeed.eclipse.Layout.WHOLE_SIZE;
 import static com.mousefeed.eclipse.Layout.WINDOW_MARGIN;
@@ -24,8 +24,10 @@ import static org.apache.commons.lang.Validate.isTrue;
 import static org.apache.commons.lang.Validate.notNull;
 import static org.apache.commons.lang.time.DateUtils.MILLIS_PER_SECOND;
 
+import com.mousefeed.eclipse.Activator;
+import com.mousefeed.eclipse.LastActionInvocationRemiderFactory;
+
 import com.mousefeed.client.Messages;
-import com.mousefeed.eclipse.popup.FontHelper;
 import java.util.HashSet;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.Command;
