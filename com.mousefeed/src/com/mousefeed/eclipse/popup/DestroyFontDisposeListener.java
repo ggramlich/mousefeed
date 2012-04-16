@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with MouseFeed.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mousefeed.eclipse;
+package com.mousefeed.eclipse.popup;
 
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
