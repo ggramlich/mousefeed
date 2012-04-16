@@ -25,7 +25,6 @@ import static org.apache.commons.lang.Validate.notNull;
 import static org.apache.commons.lang.time.DateUtils.MILLIS_PER_SECOND;
 
 import com.mousefeed.eclipse.Activator;
-import com.mousefeed.eclipse.LastActionInvocationRemiderFactory;
 
 import com.mousefeed.client.Messages;
 import java.util.HashSet;
