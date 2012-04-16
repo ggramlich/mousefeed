@@ -1,5 +1,6 @@
 package com.mousefeed.eclipse;
 
+import com.mousefeed.eclipse.popup.NagPopUp;
 import com.mousefeed.eclipse.preferences.PreferenceAccessor;
 import java.util.Collection;
 import java.util.HashSet;
