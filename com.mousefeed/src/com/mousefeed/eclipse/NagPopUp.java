@@ -25,6 +25,7 @@ import static org.apache.commons.lang.Validate.notNull;
 import static org.apache.commons.lang.time.DateUtils.MILLIS_PER_SECOND;
 
 import com.mousefeed.client.Messages;
+import com.mousefeed.eclipse.popup.FontHelper;
 import java.util.HashSet;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.Command;
@@ -37,8 +38,6 @@ import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -108,11 +107,6 @@ public class NagPopUp extends PopupDialog {
     private static final int DISTANCE_TO_CURSOR = 50;
 
     /**
-     * Number of times to increase font size in.
-     */
-    private static final int FONT_INCREASE_MULT = 2;
-    
-    /**
      * Time after which the pop up will automatically close itself.
      */
     private static final int CLOSE_TIMEOUT = 4 * (int) MILLIS_PER_SECOND;
@@ -179,6 +173,10 @@ public class NagPopUp extends PopupDialog {
         }
     };
 
+    /**
+     * FontHelper to provide font-related methods
+     */
+    private FontHelper fontHelper = new FontHelper(getDisplay());
 
     /**
      * Creates a pop-up with notification for the specified accelerator
@@ -273,7 +271,7 @@ public class NagPopUp extends PopupDialog {
             text.setStyleRange(style);
         }
 
-        configureBigFont(text);
+        fontHelper.configureBigFont(text);
 
         // since SWT.NO_FOCUS is only a hint...
         text.addFocusListener(new FocusAdapter() {
@@ -299,7 +297,7 @@ public class NagPopUp extends PopupDialog {
         link.setText("<A>" + text + "</A>");  //$NON-NLS-1$//$NON-NLS-2$
         
         configureFormData(link);
-        configureBigFont(link);
+        fontHelper.configureBigFont(link);
 
         link.addFocusListener(new FocusAdapter() {
             @Override
@@ -381,20 +379,6 @@ public class NagPopUp extends PopupDialog {
     }
 
     /**
-     * Configures big font for this. 
-     * @param c the control to increase font for. Not <code>null</code>.
-     */
-    private void configureBigFont(final Control c) {
-        final FontData[] fontData = c.getFont().getFontData();
-        for (int i = 0; i < fontData.length; i++) {
-            fontData[i].setHeight(fontData[i].getHeight() * FONT_INCREASE_MULT);
-        }
-        final Font newFont = new Font(getDisplay(), fontData);
-        c.setFont(newFont);
-        c.addDisposeListener(new DestroyFontDisposeListener(newFont));
-    }
-
-    /**
      * {@inheritDoc}
      * Places the dialog close to a mouse pointer.
      */
@@ -459,7 +443,7 @@ public class NagPopUp extends PopupDialog {
     /**
      * Current dialog display. Never <code>null</code>.
      */
-    private Display getDisplay() {
+    private static Display getDisplay() {
         return PlatformUI.getWorkbench().getDisplay();
     }
 
