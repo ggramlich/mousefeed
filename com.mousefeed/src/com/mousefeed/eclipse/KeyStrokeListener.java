@@ -1,6 +1,7 @@
 package com.mousefeed.eclipse;
 
-import com.mousefeed.eclipse.popup.NagPopUp;
+import com.mousefeed.eclipse.popup.ShowShortcutPopUp;
+import com.mousefeed.eclipse.popup.ShowShortcutPositioner;
 import com.mousefeed.eclipse.preferences.PreferenceAccessor;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,7 +28,10 @@ public class KeyStrokeListener implements Listener {
 
     private final IBindingService bindingService;
 
-    public KeyStrokeListener() {
+    private final ShowShortcutPositioner showShortcutPositioner;
+
+    public KeyStrokeListener(ShowShortcutPositioner showShortcutPositioner) {
+        this.showShortcutPositioner = showShortcutPositioner;
         bindingService = (IBindingService) PlatformUI.getWorkbench()
                 .getAdapter(IBindingService.class);
     }
@@ -39,7 +43,7 @@ public class KeyStrokeListener implements Listener {
         Collection<KeySequence> keySequences = generateKeySequences(event);
         Binding binding = determineFirstPerfectMatchForKeySequences(keySequences);
         if (binding != null) {
-            NagPopUp nagPopUp = createPopUpForBinding(binding);
+            ShowShortcutPopUp nagPopUp = createPopUpForBinding(binding);
             nagPopUp.open();
         }
     }
@@ -54,7 +58,7 @@ public class KeyStrokeListener implements Listener {
         return null;
     }
 
-    private NagPopUp createPopUpForBinding(Binding perfectMatch) {
+    private ShowShortcutPopUp createPopUpForBinding(Binding perfectMatch) {
         ParameterizedCommand command = perfectMatch.getParameterizedCommand();
         String commandName;
         try {
@@ -63,7 +67,7 @@ public class KeyStrokeListener implements Listener {
             commandName = "undefined command";
         }
         TriggerSequence triggerSequence = perfectMatch.getTriggerSequence();
-        return new NagPopUp(commandName, triggerSequence.toString(), false);
+        return new ShowShortcutPopUp(commandName, triggerSequence.toString(), showShortcutPositioner);
     }
 
     /**

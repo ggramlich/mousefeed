@@ -18,6 +18,7 @@
  */
 package com.mousefeed.eclipse;
 
+import com.mousefeed.eclipse.popup.ShowShortcutPositioner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
@@ -44,7 +45,7 @@ public class Startup implements IStartup {
             public void run() {
                 getDisplay().addFilter(SWT.Selection,
                         new GlobalSelectionListener());
-                getDisplay().addFilter(SWT.KeyUp, new KeyStrokeListener());
+                getDisplay().addFilter(SWT.KeyUp, new KeyStrokeListener(new ShowShortcutPositioner()));
             }
         });
     }

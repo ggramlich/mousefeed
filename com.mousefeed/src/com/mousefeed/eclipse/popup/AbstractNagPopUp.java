@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-public class AbstractNagPopUp extends PopupDialog {
+public abstract class AbstractNagPopUp extends PopupDialog {
 
     /**
      * How close to cursor along X axis the popup will be shown.
@@ -82,7 +82,7 @@ public class AbstractNagPopUp extends PopupDialog {
     /**
      * Current dialog display. Never <code>null</code>.
      */
-    private static Display getDisplay() {
+    protected static Display getDisplay() {
         return PlatformUI.getWorkbench().getDisplay();
     }
 
